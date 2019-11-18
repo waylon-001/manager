@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.dao.GroupUserMapper">
+    <resultMap id="BaseResultMap" type="cc.mrbird.febs.system.domain.GroupUser">
+        <id column="ID" jdbcType="DECIMAL" property="ID"/>
+        <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
+        <result column="group_user_id" jdbcType="VARCHAR" property="groupUserId"/>
+        <result column="group_user_type" jdbcType="VARCHAR" property="groupUserType"/>
+        <result column="group_user_status" jdbcType="VARCHAR" property="groupUserStatus"/>
+        <result column="group_user_amount" jdbcType="VARCHAR" property="groupUserAmount"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+    </resultMap>
+
+    <select id="findGroupUserDetail" resultType="groupUser" parameterType="groupUser">
+        SELECT
+         *
+        FROM
+        q_group_user q
+
+        WHERE 1 = 1
+        <if test="groupUser.groupCode != null and groupUser.groupCode != ''">
+            AND q.group_code = #{groupUser.groupCode}
+        </if>
+
+        <if test="groupUser.groupUserId != null and groupUser.groupUserId != ''">
+            AND q.group_user_id = #{groupUser.groupUserId}
+        </if>
+        <if test="groupInfo.createTime != null and groupInfo.createTime !=''">
+            And q.create_time &gt; #{groupInfo.createTime}
+        </if>
+        <if test="groupInfo.createTime!= null and groupInfo.createTime !=''">
+            And q.create_time &lt; #{groupInfo.createTime}
+        </if>
+
+    </select>
+
+</mapper>

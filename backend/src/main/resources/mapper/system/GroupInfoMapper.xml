@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.dao.GroupInfoMapper">
+    <resultMap id="BaseResultMap" type="cc.mrbird.febs.system.domain.GroupInfo">
+        <id column="id" jdbcType="DECIMAL" property="id"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="group_head_pic" jdbcType="VARCHAR" property="groupHeadPic"/>
+        <result column="group_status" jdbcType="VARCHAR" property="groupStatus"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+    </resultMap>
+
+    <select id="findGroupInfoDetail" resultType="groupInfo" parameterType="groupInfo">
+        SELECT
+         *
+        FROM
+        q_group_info q
+
+        WHERE 1 = 1
+        <if test="groupInfo.groupName != null and groupInfo.groupName != ''">
+            AND q.group_name = #{groupInfo.groupName}
+        </if>
+        <if test="groupInfo.createTime != null and groupInfo.createTime !=''">
+            And q.create_time &gt; #{groupInfo.createTime}
+        </if>
+        <if test="groupInfo.createTime!= null and groupInfo.createTime !=''">
+            And q.create_time &lt; #{groupInfo.createTime}
+        </if>
+
+    </select>
+
+</mapper>
