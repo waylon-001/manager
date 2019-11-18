@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Service("groupService")
+@Service("groupUserService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser> implements GroupUserService {
 
