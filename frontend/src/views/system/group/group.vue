@@ -85,11 +85,11 @@
       </a-table>
     </div>
     <!-- 用户信息查看 -->
-    <user-info
-      :userInfoData="userInfo.data"
-      :userInfoVisiable="userInfo.visiable"
-      @close="handleUserInfoClose">
-    </user-info>
+    <group-info
+      :groupInfoData="groupInfo.data"
+      :groupInfoVisiable="groupInfo.visiable"
+      @close="handleGroupInfoClose">
+    </group-info>
     <!-- 新增用户 -->
     <group-add
       @close="handleGroupAddClose"
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import UserInfo from './GroupInfo'
+import GroupInfo from './GroupInfo'
 import DeptInputTree from '../dept/DeptInputTree'
 import RangeDate from '@/components/datetime/RangeDate'
 import GroupAdd from './GroupAdd'
@@ -115,11 +115,11 @@ import UserEdit from './GroupEdit'
 
 export default {
   name: 'Group',
-  components: {UserInfo, GroupAdd, UserEdit, DeptInputTree, RangeDate},
+  components: {GroupInfo, GroupAdd, UserEdit, DeptInputTree, RangeDate},
   data () {
     return {
       advanced: false,
-      userInfo: {
+      groupInfo: {
         visiable: false,
         data: {}
       },
@@ -206,8 +206,8 @@ export default {
       }
     },
     view (record) {
-      this.userInfo.data = record
-      this.userInfo.visiable = true
+      this.groupInfo.data = record
+      this.groupInfo.visiable = true
     },
     add () {
       this.groupAdd.visiable = true
@@ -232,8 +232,8 @@ export default {
       this.$message.success('修改用户成功')
       this.search()
     },
-    handleUserInfoClose () {
-      this.userInfo.visiable = false
+    handleGroupInfoClose () {
+      this.groupInfo.visiable = false
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -328,7 +328,7 @@ export default {
       this.filteredInfo = filters
       this.sortedInfo = sorter
 
-      this.userInfo.visiable = false
+      this.groupInfo.visiable = false
       this.fetch({
         sortField: sorter.field,
         sortOrder: sorter.order,

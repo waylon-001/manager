@@ -132,7 +132,6 @@ export default {
       if (typeof values !== 'undefined') {
         Object.keys(values).forEach(_key => { this.groupInfo[_key] = values[_key] })
       }
-
     }
   },
   watch: {
