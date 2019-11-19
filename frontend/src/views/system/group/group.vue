@@ -48,15 +48,15 @@
     <div>
       <div class="operator">
         <a-button type="primary" ghost @click="add" v-hasPermission="['groupInfo:add']">新增</a-button>
-        <a-button @click="batchDelete" v-hasPermission="['groupInfo:delete']">删除</a-button>
-        <a-dropdown v-hasAnyPermission="['groupInfo:reset','groupInfo:export']">
+      <!--  <a-button @click="batchDelete" v-hasPermission="['groupInfo:delete']">删除</a-button>-->
+<!--        <a-dropdown v-hasAnyPermission="['groupInfo:reset','groupInfo:export']">
           <a-menu slot="overlay">
             <a-menu-item v-hasPermission="['groupInfo:export']" key="export-data" @click="exportExcel">导出Excel</a-menu-item>
           </a-menu>
           <a-button>
             更多操作 <a-icon type="down" />
           </a-button>
-        </a-dropdown>
+        </a-dropdown>-->
       </div>
       <!-- 表格区域 -->
       <a-table ref="TableInfo"
@@ -97,12 +97,12 @@
       :groupAddVisiable="groupAdd.visiable">
     </group-add>
     <!-- 修改用户 -->
-    <user-edit
-      ref="userEdit"
-      @close="handleUserEditClose"
-      @success="handleUserEditSuccess"
-      :userEditVisiable="userEdit.visiable">
-    </user-edit>
+    <group-edit
+      ref="groupEdit"
+      @close="handleGroupEditClose"
+      @success="handleGroupEditSuccess"
+      :groupEditVisiable="groupEdit.visiable">
+    </group-edit>
   </a-card>
 </template>
 
@@ -111,11 +111,11 @@ import GroupInfo from './GroupInfo'
 import DeptInputTree from '../dept/DeptInputTree'
 import RangeDate from '@/components/datetime/RangeDate'
 import GroupAdd from './GroupAdd'
-import UserEdit from './GroupEdit'
+import GroupEdit from './GroupEdit'
 
 export default {
   name: 'Group',
-  components: {GroupInfo, GroupAdd, UserEdit, DeptInputTree, RangeDate},
+  components: {GroupInfo, GroupAdd, GroupEdit, DeptInputTree, RangeDate},
   data () {
     return {
       advanced: false,
@@ -126,7 +126,7 @@ export default {
       groupAdd: {
         visiable: false
       },
-      userEdit: {
+      groupEdit: {
         visiable: false
       },
       queryParams: {},
@@ -165,9 +165,9 @@ export default {
         customRender: (text, row, index) => {
           switch (text) {
             case '0':
-              return <a-tag color="red">正常</a-tag>
+              return <a-tag color="cyan">正常</a-tag>
             case '1':
-              return <a-tag color="cyan">停用</a-tag>
+              return <a-tag color="red">停用</a-tag>
             default:
               return text
           }
@@ -221,14 +221,14 @@ export default {
       this.search()
     },
     edit (record) {
-      this.$refs.userEdit.setFormValues(record)
-      this.userEdit.visiable = true
+      this.$refs.groupEdit.setFormValues(record)
+      this.groupEdit.visiable = true
     },
-    handleUserEditClose () {
-      this.userEdit.visiable = false
+    handleGroupEditClose () {
+      this.groupEdit.visiable = false
     },
-    handleUserEditSuccess () {
-      this.userEdit.visiable = false
+    handleGroupEditSuccess () {
+      this.groupEdit.visiable = false
       this.$message.success('修改用户成功')
       this.search()
     },

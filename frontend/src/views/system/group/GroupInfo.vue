@@ -20,10 +20,10 @@
           <a-icon type="smile" v-if="groupInfoData.groupStatus === '1'"/>
           <a-icon type="frown" v-else/>状态：
           <template v-if="groupInfoData.groupStatus === '0'">
-            <a-tag color="red">正常</a-tag>
+            <a-tag color="cyan">正常</a-tag>
           </template>
           <template v-else-if="groupInfoData.groupStatus === '1'">
-            <a-tag color="cyan">停用</a-tag>
+            <a-tag color="red">停用</a-tag>
           </template>
           <template v-else>
             {{groupInfoData.groupStatus}}
