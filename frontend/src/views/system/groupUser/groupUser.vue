@@ -77,19 +77,19 @@
           </a-popover>
         </template>-->
         <template slot="operation" slot-scope="text, record">
-          <a-icon v-hasPermission="['groupInfo:update']" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修改用户"></a-icon>
+          <a-icon v-hasPermission="['groupUser:update']" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修改用户"></a-icon>
           &nbsp;
-          <a-icon v-hasPermission="['groupInfo:view']" type="eye" theme="twoTone" twoToneColor="#42b983" @click="view(record)" title="查看"></a-icon>
-          <a-badge v-hasNoPermission="['groupInfo:update','groupInfo:view']" status="warning" text="无权限"></a-badge>
+          <a-icon v-hasPermission="['groupUser:view']" type="eye" theme="twoTone" twoToneColor="#42b983" @click="view(record)" title="查看"></a-icon>
+          <a-badge v-hasNoPermission="['groupUser:update','groupUser:view']" status="warning" text="无权限"></a-badge>
         </template>
       </a-table>
     </div>
     <!-- 用户信息查看 -->
-    <group-info
-      :groupInfoData="groupInfo.data"
-      :groupInfoVisiable="groupInfo.visiable"
-      @close="handleGroupInfoClose">
-    </group-info>
+    <group-user-info
+      :groupUserData="groupUser.data"
+      :groupUserVisiable="groupUser.visiable"
+      @close="handleGroupUserClose">
+    </group-user-info>
     <!-- 新增用户 -->
     <groupUser-add
       @close="handlegroupUserAddClose"
@@ -97,36 +97,36 @@
       :groupUserAddVisiable="groupUserAdd.visiable">
     </groupUser-add>
     <!-- 修改用户 -->
-    <group-edit
-      ref="groupEdit"
-      @close="handleGroupEditClose"
-      @success="handleGroupEditSuccess"
-      :groupEditVisiable="groupEdit.visiable">
-    </group-edit>
+    <group-user-edit
+      ref="groupUserEdit"
+      @close="handleGroupUserEditClose"
+      @success="handleGroupUserEditSuccess"
+      :groupUserEditVisiable="groupUserEdit.visiable">
+    </group-user-edit>
   </a-card>
 </template>
 
 <script>
-import GroupInfo from './GroupUserInfo'
+import GroupUserInfo from './GroupUserInfo'
 import DeptInputTree from '../dept/DeptInputTree'
 import RangeDate from '@/components/datetime/RangeDate'
 import groupUserAdd from './GroupUserAdd'
-import GroupEdit from './GroupUserEdit'
+import groupUserEdit from './GroupUserEdit'
 
 export default {
   name: 'GroupUser',
-  components: {GroupInfo, groupUserAdd, GroupEdit, DeptInputTree, RangeDate},
+  components: {GroupUserInfo, groupUserAdd, groupUserEdit, DeptInputTree, RangeDate},
   data () {
     return {
       advanced: false,
-      groupInfo: {
+      groupUser: {
         visiable: false,
         data: {}
       },
       groupUserAdd: {
         visiable: false
       },
-      groupEdit: {
+      groupUserEdit: {
         visiable: false
       },
       queryParams: {},
@@ -211,7 +211,12 @@ export default {
         dataIndex: 'createTime',
         sorter: true,
         sortOrder: sortedInfo.columnKey === 'createTime' && sortedInfo.order
-      }, {
+      },
+      {
+        title: '虚拟币',
+        dataIndex: 'groupUserAmount'
+      },
+      {
         title: '操作',
         dataIndex: 'operation',
         scopedSlots: { customRender: 'operation' }
@@ -233,8 +238,8 @@ export default {
       }
     },
     view (record) {
-      this.groupInfo.data = record
-      this.groupInfo.visiable = true
+      this.groupUser.data = record
+      this.groupUser.visiable = true
     },
     add () {
       this.groupUserAdd.visiable = true
@@ -248,19 +253,19 @@ export default {
       this.search()
     },
     edit (record) {
-      this.$refs.groupEdit.setFormValues(record)
-      this.groupEdit.visiable = true
+      this.$refs.groupUserEdit.setFormValues(record)
+      this.groupUserEdit.visiable = true
     },
-    handleGroupEditClose () {
-      this.groupEdit.visiable = false
+    handleGroupUserEditClose () {
+      this.groupUserEdit.visiable = false
     },
-    handleGroupEditSuccess () {
-      this.groupEdit.visiable = false
+    handleGroupUserEditSuccess () {
+      this.groupUserEdit.visiable = false
       this.$message.success('修改用户成功')
       this.search()
     },
-    handleGroupInfoClose () {
-      this.groupInfo.visiable = false
+    handleGroupUserClose () {
+      this.groupUser.visiable = false
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -355,7 +360,7 @@ export default {
       this.filteredInfo = filters
       this.sortedInfo = sorter
 
-      this.groupInfo.visiable = false
+      this.groupUser.visiable = false
       this.fetch({
         sortField: sorter.field,
         sortOrder: sorter.order,
