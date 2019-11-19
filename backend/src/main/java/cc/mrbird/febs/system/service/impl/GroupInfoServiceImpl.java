@@ -113,6 +113,7 @@ public class GroupInfoServiceImpl extends ServiceImpl<GroupInfoMapper, GroupInfo
     @Transactional
     public void createGroupInfo(GroupInfo groupInfo) throws Exception {
         // 创建群
+        groupInfo.setCreateTime(DateUtil.getDateFormat(new Date(),DateUtil.FULL_TIME_SPLIT_PATTERN));
         save(groupInfo);
         GroupInfo groupInfo1= baseMapper.selectOne(new LambdaQueryWrapper<GroupInfo>().eq(GroupInfo::getGroupName, groupInfo.getGroupName()));
         if(null!=groupInfo1)
@@ -139,6 +140,7 @@ public class GroupInfoServiceImpl extends ServiceImpl<GroupInfoMapper, GroupInfo
     @Transactional
     public void updateGroupInfo(GroupInfo groupInfo) throws Exception {
         // 更新用户
+        groupInfo.setUpdateTime(DateUtil.getDateFormat(new Date(),DateUtil.FULL_TIME_SPLIT_PATTERN));
         updateById(groupInfo);
 
     }

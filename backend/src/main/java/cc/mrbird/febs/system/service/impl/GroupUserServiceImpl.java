@@ -3,6 +3,7 @@ package cc.mrbird.febs.system.service.impl;
 import cc.mrbird.febs.common.domain.FebsConstant;
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.service.CacheService;
+import cc.mrbird.febs.common.utils.DateUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.system.dao.GroupInfoMapper;
 import cc.mrbird.febs.system.dao.GroupUserMapper;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -49,6 +51,7 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     @Transactional
     public void createGroupUser(GroupUser groupUser) throws Exception {
         // 创建群成员
+        groupUser.setCreateTime(DateUtil.getDateFormat(new Date(),DateUtil.FULL_TIME_SPLIT_PATTERN));
         save(groupUser);
 
     }
@@ -57,6 +60,7 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     @Transactional
     public void updateGroupUser(GroupUser groupUser) throws Exception {
         // 更新用户
+        groupUser.setUpdateTime(DateUtil.getDateFormat(new Date(),DateUtil.FULL_TIME_SPLIT_PATTERN));
         updateById(groupUser);
 
     }
