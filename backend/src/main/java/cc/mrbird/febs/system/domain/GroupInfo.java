@@ -40,7 +40,8 @@ public class GroupInfo implements Serializable {
 
     private String updateBy;
 
-    private  String createTimeTo;
+    private transient String createTimeFrom;
+    private transient String createTimeTo;
 
 
     public Long getId() {
@@ -113,5 +114,13 @@ public class GroupInfo implements Serializable {
 
     public void setCreateTimeTo(String createTimeTo) {
         this.createTimeTo = createTimeTo;
+    }
+
+    public String getCreateTimeFrom() {
+        return createTimeFrom;
+    }
+
+    public void setCreateTimeFrom(String createTimeFrom) {
+        this.createTimeFrom = createTimeFrom;
     }
 }

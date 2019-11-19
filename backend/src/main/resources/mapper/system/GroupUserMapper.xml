@@ -28,11 +28,11 @@
         <if test="groupUser.groupUserId != null and groupUser.groupUserId != ''">
             AND q.group_user_id = #{groupUser.groupUserId}
         </if>
-        <if test="groupInfo.createTime != null and groupInfo.createTime !=''">
-            And q.create_time &gt; #{groupInfo.createTime}
+        <if test="groupUser.createTimeFrom != null and groupUser.createTimeFrom !=''">
+            And q.create_time &gt; #{groupUser.createTimeFrom}
         </if>
-        <if test="groupInfo.createTime!= null and groupInfo.createTime !=''">
-            And q.create_time &lt; #{groupInfo.createTime}
+        <if test="groupUser.createTimeTo!= null and groupUser.createTimeTo !=''">
+            And q.create_time &lt; #{groupUser.createTimeTo}
         </if>
 
     </select>

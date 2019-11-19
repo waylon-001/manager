@@ -1,13 +1,21 @@
 package cc.mrbird.febs.system.service;
 
 import cc.mrbird.febs.common.domain.QueryRequest;
+import cc.mrbird.febs.system.domain.Dept;
 import cc.mrbird.febs.system.domain.GroupInfo;
+import cc.mrbird.febs.system.domain.Role;
 import cc.mrbird.febs.system.domain.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Map;
+
 
 public interface GroupService extends IService<GroupInfo> {
+
+    Map<String, Object> findGroupInfos(QueryRequest request, GroupInfo groupInfo);
+
+    /*IPage<GroupInfo> findGroupInfos(GroupInfo groupInfo, QueryRequest request);*/
 
     /**
      * 通过用户名查找群

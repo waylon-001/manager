@@ -4,7 +4,9 @@ import cc.mrbird.febs.common.annotation.Log;
 import cc.mrbird.febs.common.controller.BaseController;
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.exception.FebsException;
+import cc.mrbird.febs.system.domain.Dept;
 import cc.mrbird.febs.system.domain.GroupInfo;
+import cc.mrbird.febs.system.domain.Role;
 import cc.mrbird.febs.system.service.GroupService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
@@ -30,6 +32,14 @@ public class GroupInfoController extends BaseController {
 
     @Autowired
     private GroupService groupService;
+
+    @GetMapping("/groupList")
+    public Map<String, Object> deptList(QueryRequest request, GroupInfo groupInfo) {
+        return this.groupService.findGroupInfos(request, groupInfo);
+    }
+/*    public Map<String, Object> roleList(QueryRequest queryRequest, GroupInfo groupInfo) {
+        return getDataTable(groupService.findGroupInfos(groupInfo, queryRequest));
+    }*/
 
     @GetMapping("check/{groupName}")
     public boolean checkUserName(@NotBlank(message = "{required}") @PathVariable String groupName) {

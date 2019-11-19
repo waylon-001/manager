@@ -36,6 +36,9 @@ public class GroupUser implements Serializable {
 
     private String updateBy;
 
+    private transient String createTimeFrom;
+    private transient String createTimeTo;
+
     public Long getID() {
         return ID;
     }
@@ -114,5 +117,21 @@ public class GroupUser implements Serializable {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public String getCreateTimeTo() {
+        return createTimeTo;
+    }
+
+    public void setCreateTimeTo(String createTimeTo) {
+        this.createTimeTo = createTimeTo;
+    }
+
+    public String getCreateTimeFrom() {
+        return createTimeFrom;
+    }
+
+    public void setCreateTimeFrom(String createTimeFrom) {
+        this.createTimeFrom = createTimeFrom;
     }
 }

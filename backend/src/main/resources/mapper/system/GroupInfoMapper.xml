@@ -22,8 +22,8 @@
         <if test="groupInfo.groupName != null and groupInfo.groupName != ''">
             AND q.group_name = #{groupInfo.groupName}
         </if>
-        <if test="groupInfo.createTime != null and groupInfo.createTime !=''">
-            And q.create_time &gt; #{groupInfo.createTime}
+        <if test="groupInfo.createTimeFrom != null and groupInfo.createTimeFrom !=''">
+            And q.create_time &gt; #{groupInfo.createTimeFrom}
         </if>
         <if test="groupInfo.createTimeTo!= null and groupInfo.createTimeTo !=''">
             And q.create_time &lt; #{groupInfo.createTimeTo}
