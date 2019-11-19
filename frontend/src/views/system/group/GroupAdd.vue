@@ -6,7 +6,7 @@
     placement="right"
     :closable="false"
     @close="onClose"
-    :visible="groupInfoAddVisiable"
+    :visible="groupAddVisiable"
     style="height: calc(100% - 55px);overflow: auto;padding-bottom: 53px;">
     <a-form :form="form">
       <a-form-item label='群名'
@@ -50,7 +50,7 @@ const formItemLayout = {
 export default {
   name: 'GroupAdd',
   props: {
-    groupInfoAddVisiable: {
+    groupAddVisiable: {
       default: false
     }
   },
@@ -135,8 +135,8 @@ export default {
     }
   },
   watch: {
-    groupInfoAddVisiable () {
-      if (this.groupInfoAddVisiable) {
+    groupAddVisiable () {
+      if (this.groupAddVisiable) {
         this.$get('role').then((r) => {
           this.roleData = r.data.rows
         })

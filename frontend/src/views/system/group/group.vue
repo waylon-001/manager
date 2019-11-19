@@ -94,7 +94,7 @@
     <group-add
       @close="handleGroupAddClose"
       @success="handleGroupAddSuccess"
-      :userAddVisiable="groupAdd.visiable">
+      :groupAddVisiable="groupAdd.visiable">
     </group-add>
     <!-- 修改用户 -->
     <user-edit
