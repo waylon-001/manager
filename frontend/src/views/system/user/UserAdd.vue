@@ -184,6 +184,7 @@ export default {
         })
         this.$get('dept').then((r) => {
           this.deptTreeData = r.data.rows.children
+          console.log('deptTreeData', this.deptTreeData)
         })
       }
     }

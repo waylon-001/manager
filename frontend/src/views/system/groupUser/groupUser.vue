@@ -7,10 +7,10 @@
         <div :class="advanced ? null: 'fold'">
             <a-col :md="12" :sm="24" >
               <a-form-item
-                label="群名"
+                label="用户ID"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.groupName"/>
+                <a-input v-model="queryParams.groupUserId"/>
               </a-form-item>
             </a-col>
 <!--            <a-col :md="12" :sm="24" >
@@ -47,7 +47,7 @@
     </div>
     <div>
       <div class="operator">
-        <a-button type="primary" ghost @click="add" v-hasPermission="['groupInfo:add']">新增</a-button>
+        <a-button type="primary" ghost @click="add" v-hasPermission="['groupUser:add']">新增</a-button>
       <!--  <a-button @click="batchDelete" v-hasPermission="['groupInfo:delete']">删除</a-button>-->
 <!--        <a-dropdown v-hasAnyPermission="['groupInfo:reset','groupInfo:export']">
           <a-menu slot="overlay">
@@ -91,11 +91,11 @@
       @close="handleGroupInfoClose">
     </group-info>
     <!-- 新增用户 -->
-    <group-add
-      @close="handleGroupAddClose"
-      @success="handleGroupAddSuccess"
-      :groupAddVisiable="groupAdd.visiable">
-    </group-add>
+    <groupUser-add
+      @close="handlegroupUserAddClose"
+      @success="handlegroupUserAddSuccess"
+      :groupUserAddVisiable="groupUserAdd.visiable">
+    </groupUser-add>
     <!-- 修改用户 -->
     <group-edit
       ref="groupEdit"
@@ -107,15 +107,15 @@
 </template>
 
 <script>
-import GroupInfo from './GroupInfo'
+import GroupInfo from './GroupUserInfo'
 import DeptInputTree from '../dept/DeptInputTree'
 import RangeDate from '@/components/datetime/RangeDate'
-import GroupAdd from './GroupAdd'
-import GroupEdit from './GroupEdit'
+import groupUserAdd from './GroupUserAdd'
+import GroupEdit from './GroupUserEdit'
 
 export default {
-  name: 'Group',
-  components: {GroupInfo, GroupAdd, GroupEdit, DeptInputTree, RangeDate},
+  name: 'GroupUser',
+  components: {GroupInfo, groupUserAdd, GroupEdit, DeptInputTree, RangeDate},
   data () {
     return {
       advanced: false,
@@ -123,7 +123,7 @@ export default {
         visiable: false,
         data: {}
       },
-      groupAdd: {
+      groupUserAdd: {
         visiable: false
       },
       groupEdit: {
@@ -153,32 +153,55 @@ export default {
       filteredInfo = filteredInfo || {}
       return [{
         title: '群号',
-        dataIndex: 'id'
+        dataIndex: 'groupCode'
       },
       {
-        title: '群名',
-        dataIndex: 'groupName',
+        title: '用户ID',
+        dataIndex: 'groupUserId',
         sorter: true,
-        sortOrder: sortedInfo.columnKey === 'groupName' && sortedInfo.order
-      }, {
-        title: '群头像',
-        dataIndex: 'groupHeadPic'
-      }, {
-        title: '状态',
-        dataIndex: 'groupStatus',
+        sortOrder: sortedInfo.columnKey === 'groupUserId' && sortedInfo.order
+      },
+      {
+        title: '用户类型',
+        dataIndex: 'groupUserType',
         customRender: (text, row, index) => {
           switch (text) {
             case '0':
-              return <a-tag color="cyan">正常</a-tag>
+              return <a-tag color="cyan">群主</a-tag>
             case '1':
-              return <a-tag color="red">停用</a-tag>
+              return <a-tag color="red">群成员</a-tag>
             default:
               return text
           }
         },
         filters: [
-          { text: '停用', value: '1' },
-          { text: '正常', value: '0' }
+          { text: '群成员', value: '1' },
+          { text: '群主', value: '0' }
+        ],
+        filterMultiple: false,
+        filteredValue: filteredInfo.status || null,
+        onFilter: (value, record) => record.status.includes(value)
+      },
+
+      {
+        title: '状态',
+        dataIndex: 'groupUserStatus',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case '0':
+              return <a-tag color="red">待审核</a-tag>
+            case '1':
+              return <a-tag color="cyan">通过</a-tag>
+            case '2':
+              return <a-tag color="red">拒绝</a-tag>
+            default:
+              return text
+          }
+        },
+        filters: [
+          { text: '通过', value: '1' },
+          { text: '待审核', value: '0' },
+          { text: '拒绝', value: '2' }
         ],
         filterMultiple: false,
         filteredValue: filteredInfo.status || null,
@@ -214,14 +237,14 @@ export default {
       this.groupInfo.visiable = true
     },
     add () {
-      this.groupAdd.visiable = true
+      this.groupUserAdd.visiable = true
     },
-    handleGroupAddClose () {
-      this.groupAdd.visiable = false
+    handlegroupUserAddClose () {
+      this.groupUserAdd.visiable = false
     },
-    handleGroupAddSuccess () {
-      this.groupAdd.visiable = false
-      this.$message.success('新增群成功！')
+    handlegroupUserAddSuccess () {
+      this.groupUserAdd.visiable = false
+      this.$message.success('新增群成员成功！')
       this.search()
     },
     edit (record) {
@@ -354,7 +377,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      this.$get('groupInfo', {
+      this.$get('groupUser', {
         ...params
       }).then((r) => {
         let data = r.data
