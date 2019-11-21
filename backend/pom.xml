@@ -6,7 +6,7 @@
     <groupId>cc.mrbird</groupId>
     <artifactId>febs_shiro_jwt</artifactId>
     <version>1.0.0-release</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>febs_shiro_jwt</name>
     <description>FEBS_Shrio_JWT</description>
@@ -156,6 +156,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.ui}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

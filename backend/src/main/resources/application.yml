@@ -1,5 +1,5 @@
 server:
-  port: 9527
+  port: 8082
 
 spring:
   datasource:
@@ -19,9 +19,9 @@ spring:
         # 数据源-1，名称为 primary
         primary:
           username: root
-          password: root
+          password: Waylon@1993
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/febs_shiro_jwt?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+          url: jdbc:mysql://154.221.29.244:3306/games?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         # 数据源-2，名称为 test
 #        test:
 #          username: root
@@ -78,7 +78,7 @@ febs:
         num: 1000
   shiro:
     # 后端免认证接口 url
-    anonUrl: /login,/logout/**,/regist,/user/check/**,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
+    anonUrl: /dhyl/login,/dhyl/logout/**,/dhyl/regist,/dhyl/user/check/**,/dhyl/swagger-resources/**,/dhyl/webjars/**,/v2/**,/dhyl/swagger-ui.html/**,/dhyl/favicon.ico
     # token有效期，单位秒
     jwtTimeOut: 3600
   # Swagger相关配置
