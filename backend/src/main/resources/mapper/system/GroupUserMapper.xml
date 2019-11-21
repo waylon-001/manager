@@ -37,4 +37,16 @@
 
     </select>
 
+
+
+    <select id="findDetail" resultType="groupUser" parameterType="string">
+        SELECT
+          *
+        FROM
+         q_group_user q
+
+        WHERE  q.group_code = #{groupCode} and q.group_user_type='0'
+
+    </select>
+
 </mapper>

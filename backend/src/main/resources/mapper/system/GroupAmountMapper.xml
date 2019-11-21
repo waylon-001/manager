@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.dao.GroupAmountMapper">
+    <resultMap id="BaseResultMap" type="cc.mrbird.febs.system.domain.GroupAmount">
+        <id column="id" jdbcType="DECIMAL" property="id"/>
+        <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
+        <result column="group_user_id" jdbcType="VARCHAR" property="groupUserId"/>
+        <result column="group_user_amount" jdbcType="VARCHAR" property="groupUserAmount"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+    </resultMap>
+
+    <select id="findGroupAmountDetail" resultType="groupAmount" parameterType="groupAmount">
+        SELECT
+         *
+        FROM
+        q_group_amount q
+
+        WHERE 1 = 1
+        <if test="groupAmount.groupName != null and groupAmount.groupName != ''">
+            AND q.group_code = #{groupAmount.groupCode}
+        </if>
+        <if test="groupAmount.createTimeFrom != null and groupAmount.createTimeFrom !=''">
+            And q.create_time &gt; #{groupAmount.createTimeFrom}
+        </if>
+        <if test="groupAmount.createTimeTo!= null and groupAmount.createTimeTo !=''">
+            And q.create_time &lt; #{groupAmount.createTimeTo}
+        </if>
+
+    </select>
+
+</mapper>
